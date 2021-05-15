@@ -89,7 +89,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
 
   @HostBinding('attr.tabindex') tabindex = -1;
 
-  @Output() public hotkeyEmitter = new EventEmitter<KeyboardEvent>();
+  @Output() public onHotkey = new EventEmitter<KeyboardEvent>();
 
   @HostListener('focus')
   onFocus() {
@@ -349,8 +349,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     this.editorToolbar.setEditorMode(!this.modeVisual);
   }
   keyup(event) {
-    console.log('aaa');
-    this.hotkeyEmitter.emit(event);
+    this.onHotkey.emit(event);
   }
 
   /**
