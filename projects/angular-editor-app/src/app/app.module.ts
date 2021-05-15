@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularEditorModule} from '../../../angular-editor/src/lib/angular-editor.module';
+import {BalloonContextMenuModule} from './balloon-context-menu/balloon-context-menu.module';
+import {HotkeyModule} from 'angular2-hotkeys';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import {AngularEditorModule} from '../../../angular-editor/src/lib/angular-edito
     AngularEditorModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HotkeyModule.forRoot(),
+    BalloonContextMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

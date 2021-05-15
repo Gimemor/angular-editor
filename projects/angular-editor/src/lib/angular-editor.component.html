@@ -38,7 +38,7 @@
                (focus)="onTextAreaFocus($event)"
                (blur)="onTextAreaBlur($event)"
                (click)="exec()"
-               (keyup)="exec()"
+               (keyup)="keyup($event); exec()"
                (mouseout)="onTextAreaMouseOut($event)"
           >
           </div>

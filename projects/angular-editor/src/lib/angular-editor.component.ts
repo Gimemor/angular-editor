@@ -40,6 +40,19 @@ import {isDefined} from './utils';
 })
 export class AngularEditorComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnDestroy {
 
+  constructor(
+    private r: Renderer2,
+    private editorService: AngularEditorService,
+    @Inject(DOCUMENT) private doc: any,
+    private sanitizer: DomSanitizer,
+    private cdRef: ChangeDetectorRef,
+    @Attribute('tabindex') defaultTabIndex: string,
+    @Attribute('autofocus') private autoFocus: any
+  ) {
+    const parsedTabIndex = Number(defaultTabIndex);
+    this.tabIndex = (parsedTabIndex || parsedTabIndex === 0) ? parsedTabIndex : null;
+  }
+
   private onChange: (value: string) => void;
   private onTouched: () => void;
 
@@ -76,22 +89,11 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
 
   @HostBinding('attr.tabindex') tabindex = -1;
 
+  @Output() public hotkeyEmitter = new EventEmitter<KeyboardEvent>();
+
   @HostListener('focus')
   onFocus() {
     this.focus();
-  }
-
-  constructor(
-    private r: Renderer2,
-    private editorService: AngularEditorService,
-    @Inject(DOCUMENT) private doc: any,
-    private sanitizer: DomSanitizer,
-    private cdRef: ChangeDetectorRef,
-    @Attribute('tabindex') defaultTabIndex: string,
-    @Attribute('autofocus') private autoFocus: any
-  ) {
-    const parsedTabIndex = Number(defaultTabIndex);
-    this.tabIndex = (parsedTabIndex || parsedTabIndex === 0) ? parsedTabIndex : null;
   }
 
   ngOnInit() {
@@ -346,6 +348,10 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     }
     this.editorToolbar.setEditorMode(!this.modeVisual);
   }
+  keyup(event) {
+    console.log('aaa');
+    this.hotkeyEmitter.emit(event);
+  }
 
   /**
    * toggles editor buttons when cursor moved or positioning
@@ -354,7 +360,6 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
    */
   exec() {
     this.editorToolbar.triggerButtons();
-
     let userSelection;
     if (this.doc.getSelection) {
       userSelection = this.doc.getSelection();

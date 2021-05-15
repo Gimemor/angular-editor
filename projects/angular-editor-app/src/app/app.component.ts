@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AngularEditorConfig} from 'angular-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AngularEditorConfig} from '../../../angular-editor/src/lib/config';
 
 @Component({
   selector: 'app-root',
@@ -98,5 +98,13 @@ export class AppComponent implements OnInit {
 
   onChange2(event) {
     console.warn(this.form.value);
+  }
+
+
+  public handleHotkey(event: KeyboardEvent): boolean {
+    if (event.ctrlKey && event.code === 'Space') {
+      alert('Typed hotkey');
+    }
+    return false; // Prevent bubbling
   }
 }
